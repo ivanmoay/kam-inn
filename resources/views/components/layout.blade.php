@@ -116,7 +116,7 @@
         </a>
       </li> 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="\cart">
+        <a class="nav-link collapsed" href="/items/cart">
           <i class="bi bi-grid"></i>
           <span>Cart</span>
         </a>
@@ -125,6 +125,12 @@
         <a class="nav-link collapsed" href="\rooms">
           <i class="bi bi-grid"></i>
           <span>Rooms</span>
+        </a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="\room_pricings">
+          <i class="bi bi-grid"></i>
+          <span>Room Pricing</span>
         </a>
       </li> 
       <li class="nav-item">

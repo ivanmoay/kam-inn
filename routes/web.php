@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoomPricingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,9 +35,19 @@ Route::get('/items/{item}/edit', [ItemController::class, 'edit']);
 Route::put('/items/{item}', [ItemController::class, 'update']);
 Route::delete('/items/{item}', [ItemController::class, 'destroy']);
 
+Route::get('/items/{item}/add_to_cart', [ItemController::class, 'addToCart']);
+Route::get('/items/cart', [ItemController::class, 'cart']);
+
 Route::get('/rooms',[RoomController::class, 'index']);
 Route::get('/rooms/create', [RoomController::class, 'create']);
 Route::post('/rooms', [RoomController::class, 'store']);
 Route::get('/rooms/{room}/edit', [RoomController::class, 'edit']);
 Route::put('/rooms/{room}', [RoomController::class, 'update']);
 Route::delete('/rooms/{room}', [RoomController::class, 'destroy']);
+
+Route::get('/room_pricings',[RoomPricingController::class, 'index']);
+Route::get('/room_pricings/create', [RoomPricingController::class, 'create']);
+Route::post('/room_pricings', [RoomPricingController::class, 'store']);
+Route::get('/room_pricings/{room_pricing}/edit', [RoomPricingController::class, 'edit']);
+Route::put('/room_pricings/{room_pricing}', [RoomPricingController::class, 'update']);
+Route::delete('/room_pricings/{room_pricing}', [RoomPricingController::class, 'destroy']);

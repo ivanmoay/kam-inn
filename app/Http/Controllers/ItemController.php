@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class ItemController extends Controller
 {
@@ -55,15 +56,18 @@ class ItemController extends Controller
         return redirect('/items')->with('message', 'Item created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Item $item)
+    public function addToCart(Item $item)
     {
-        //
+        Cart::add($item->id, $item->item, 1, $item->item_price, 0);
+
+        return redirect('/items');
+    }
+
+    public function cart()
+    {
+        return view('items.cart', [
+            'cart' => Cart::content()
+        ]);
     }
 
     /**
