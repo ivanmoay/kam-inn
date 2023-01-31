@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Sale;
+use App\Models\SaleItem;
 use Illuminate\Http\Request;
+use App\Mail\TransactionMail;
+use Illuminate\Support\Facades\Mail;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class ItemController extends Controller
@@ -60,7 +64,7 @@ class ItemController extends Controller
     {
         Cart::add($item->id, $item->item, 1, $item->item_price, 0);
 
-        return redirect('/items');
+        return redirect('/items')->with('message', 'Item added to cart.');
     }
 
     public function cart()
@@ -68,6 +72,60 @@ class ItemController extends Controller
         return view('items.cart', [
             'cart' => Cart::content()
         ]);
+    }
+
+    public function removeItemFromCart($rowId)
+    {
+        Cart::remove($rowId);
+
+        return redirect('/items/cart');
+    }
+
+    public function clearCart()
+    {
+        Cart::destroy();
+
+        return redirect('/items/cart');
+    }
+
+    public function checkout(Request $request)
+    {
+        //dd($request);
+        $total = 0;
+        for ($i=0; $i < $request->counter; $i++) { 
+            $total += $request->{"total".$i};
+        }
+        
+        if(
+            $sale = Sale::create([
+                'date_time' => now(),
+                'total' => $total,
+                //TODO set user_id
+                'user_id' => 0
+            ])
+          )
+        {
+            for ($i=0; $i < $request->counter; $i++) { 
+                SaleItem::create([
+                    'sale_id' => $sale->id,
+                    'item_id' => $request->{"id".$i},
+                    'quantity' => $request->{"qty".$i},
+                    'price' => $request->{"price".$i},
+                    'total' => $request->{"total".$i}
+                ]);
+            }
+        }
+
+        //email
+        $date_time = now();
+        $total = $total;
+        $user = 0;
+        //TODO include items sold
+        Mail::to('ivan.moay@gmail.com')->send(new TransactionMail($date_time, $total, $user));
+        
+        Cart::destroy();
+
+        return redirect('/items')->with('message', 'Sale saved.');
     }
 
     /**

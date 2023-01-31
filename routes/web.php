@@ -37,6 +37,9 @@ Route::delete('/items/{item}', [ItemController::class, 'destroy']);
 
 Route::get('/items/{item}/add_to_cart', [ItemController::class, 'addToCart']);
 Route::get('/items/cart', [ItemController::class, 'cart']);
+Route::get('/cart/clear', [ItemController::class, 'clearCart']);
+Route::get('/cart/{cart}/remove', [ItemController::class, 'removeItemFromCart']);
+Route::post('/cart/checkout', [ItemController::class, 'checkout']);
 
 Route::get('/rooms',[RoomController::class, 'index']);
 Route::get('/rooms/create', [RoomController::class, 'create']);

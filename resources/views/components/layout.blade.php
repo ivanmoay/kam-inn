@@ -118,7 +118,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="/items/cart">
           <i class="bi bi-grid"></i>
-          <span>Cart</span>
+          <span>Cart({{Cart::content()->count()}})</span>
         </a>
       </li> 
       <li class="nav-item">

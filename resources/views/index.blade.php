@@ -9,8 +9,8 @@
 
             <div class="card">
                 <div class="card-body">
-                <h5 class="card-title">Example Card</h5>
-                <p>This is an examle page with no content. You can use it as a starter for your custom pages.</p>
+                <h5 class="card-title">Kam-Inn</h5>
+                <p> {!! \Illuminate\Foundation\Inspiring::quote() !!} </p>
                 </div>
             </div>
 
