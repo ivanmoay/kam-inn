@@ -47,7 +47,7 @@ class TransactionMail extends Mailable
             with: [
                 'date_time' => $this->date_time,
                 'total' => $this->total,
-                'user' => $this->user
+                'user' => $this->user,
             ],
         );
     }

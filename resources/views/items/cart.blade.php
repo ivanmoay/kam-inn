@@ -44,7 +44,7 @@
                                     @foreach ($cart as $cart)
                                     <tr>
                                         <th scope="row">{{$counter+1}}</th>                                
-                                        <td>{{$cart->name}}<input type="hidden" value="{{$cart->id}}" name="id{{$counter}}"></td>
+                                        <td>{{$cart->name}}<input type="hidden" value="{{$cart->id}}" name="id{{$counter}}"><input type="hidden" value="{{$cart->name}}" name="item{{$counter}}"></td>
                                         <td><input type="number" class="form-control" id="qty{{$counter}}" name="qty{{$counter}}" value="{{$cart->qty}}" onchange="getTotal('total{{$counter}}', this.id, 'price{{$counter}}')"></td>
                                         <td><input type="number" class="form-control" id="price{{$counter}}" name="price{{$counter}}" value="{{$cart->price}}" readonly></td>
                                         <td><input type="number" class="form-control" id="total{{$counter}}" name="total{{$counter}}" value="{{$cart->qty * $cart->price}}" readonly></td>

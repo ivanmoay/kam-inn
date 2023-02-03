@@ -46,7 +46,7 @@ class SaleItemController extends Controller
      */
     public function show(SaleItem $saleItem)
     {
-        //
+        
     }
 
     /**

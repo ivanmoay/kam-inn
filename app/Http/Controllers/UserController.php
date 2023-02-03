@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -44,20 +45,31 @@ class UserController extends Controller
             'userlevel' => 'required'
         ]);        
 
+        $formFields['password'] = Hash::make($formFields['password']);
         User::create($formFields);
 
         return redirect('/users')->with('message', 'User created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\user  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
+    public function login(Request $request)
     {
-        //
+        $this->validate($request, [
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        if(!auth()->attempt($request->only('username','password'),$request->remember)){
+            return back()->with('status', 'Invalid login details');
+        }
+
+        return redirect('/');
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return redirect('/');
     }
 
     /**
@@ -87,6 +99,7 @@ class UserController extends Controller
             'userlevel' => 'required'
         ]);        
 
+        $formFields['password'] = Hash::make($formFields['password']);
         $user->update($formFields);
 
         return redirect('/users')->with('message', 'User updated successfully!');

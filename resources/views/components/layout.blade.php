@@ -77,12 +77,12 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <span class="d-none d-md-block dropdown-toggle ps-2">Hello, User</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">Hello, {{auth()->user()->username}}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">  
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="/logout">
+              <a class="dropdown-item d-flex align-items-center" href="\logout">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -119,6 +119,12 @@
         <a class="nav-link collapsed" href="/items/cart">
           <i class="bi bi-grid"></i>
           <span>Cart({{Cart::content()->count()}})</span>
+        </a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="\sales">
+          <i class="bi bi-grid"></i>
+          <span>Sales</span>
         </a>
       </li> 
       <li class="nav-item">

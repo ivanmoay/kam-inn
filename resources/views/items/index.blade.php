@@ -22,7 +22,21 @@
                         <div class="text-end">
                             <button type="button" class="btn btn-primary">Add New</button>       
                         </div>  
-                    </a>                                          
+                    </a>     
+
+                    <form method="POST" action="/items/search" class="row g-3">
+                    @csrf
+                        <div class="col-md-3">
+                            {{-- <label for="inputEmail5" class="form-label">Email</label> --}}
+                            <input type="text" class="form-control" name="search" placeholder="Search Item">
+                        </div>
+                        <div class="col-md-3">
+                            {{-- <label for="inputPassword5" class="form-label">Password</label> --}}
+                            {{-- <input type="password" class="form-control" id="inputPassword5"> --}}
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>   
+
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -48,7 +62,7 @@
                                     @endif                                                                            
                                 </td>
                                 <td>{{$item->item}}</td>
-                                <td>{{$item->item_price}}</td>
+                                <td>₱ {{number_format($item->item_price, 2)}}</td>
                                 <td>{{$item->available == 1 ? 'Yes' : 'No'}}</td>
                                 <td class="text-center"><a href="/items/{{$item->id}}/edit"><button type="button" class="btn btn-outline-info btn-sm">Edit</button></a></td>
                                 <td class="text-center">
@@ -68,6 +82,10 @@
                         @endunless                                                                  
                         </tbody>
                     </table>
+                    @if ($paginated)
+                        {{$items->links()}}
+                    @endif                    
+                    
                     </div>
                 </div>
             </div>

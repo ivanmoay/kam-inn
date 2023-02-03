@@ -20,7 +20,22 @@ class ItemController extends Controller
     public function index()
     {
         return view('items.index', [
-            'items' => Item::all()
+            'items' => Item::orderBy('item', 'ASC')->paginate(32),
+            'paginated' => true
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        if(empty($request->search)){
+            return view('items.index', [
+                'items' => Item::orderBy('item', 'ASC')->paginate(32),
+                'paginated' => true
+            ]);
+        }
+        return view('items.index', [
+            'items' => Item::where('item','like', '%'.$request->search.'%')->orderBy('item', 'ASC')->get(),
+            'paginated' => false
         ]);
     }
 
@@ -91,6 +106,7 @@ class ItemController extends Controller
     public function checkout(Request $request)
     {
         //dd($request);
+        //$items = array();
         $total = 0;
         for ($i=0; $i < $request->counter; $i++) { 
             $total += $request->{"total".$i};
@@ -101,7 +117,7 @@ class ItemController extends Controller
                 'date_time' => now(),
                 'total' => $total,
                 //TODO set user_id
-                'user_id' => 0
+                'user_id' => auth()->user()->id
             ])
           )
         {
@@ -113,13 +129,14 @@ class ItemController extends Controller
                     'price' => $request->{"price".$i},
                     'total' => $request->{"total".$i}
                 ]);
+                //array_push($items, $request->{"item".$i});
             }
         }
 
         //email
         $date_time = now();
         $total = $total;
-        $user = 0;
+        $user = auth()->user()->username;
         //TODO include items sold
         Mail::to('ivan.moay@gmail.com')->send(new TransactionMail($date_time, $total, $user));
         
