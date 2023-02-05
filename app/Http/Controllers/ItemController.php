@@ -105,8 +105,8 @@ class ItemController extends Controller
 
     public function checkout(Request $request)
     {
-        //dd($request);
-        //$items = array();
+        date_default_timezone_set('Asia/Manila');
+        
         $total = 0;
         for ($i=0; $i < $request->counter; $i++) { 
             $total += $request->{"total".$i};
@@ -138,7 +138,7 @@ class ItemController extends Controller
         $total = $total;
         $user = auth()->user()->username;
         //TODO include items sold
-        Mail::to('ivan.moay@gmail.com')->send(new TransactionMail($date_time, $total, $user));
+        Mail::to(env('MAIL_TO_ADDRESS'))->send(new TransactionMail($date_time, $total, $user));
         
         Cart::destroy();
 

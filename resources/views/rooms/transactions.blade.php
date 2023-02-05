@@ -9,52 +9,46 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                    <h5 class="card-title">Room Prices</h5>
+                    <h5 class="card-title">Room Transactions</h5>
 
                     @if(session()->has('message'))
                         <div class="alert alert-primary alert-dismissible fade show" role="alert">
                             {{session('message')}}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                    @endif
-                    
-                    <a href="/room_pricings/create">
-                        <div class="text-end">
-                            <button type="button" class="btn btn-primary">Add New</button>       
-                        </div>  
-                    </a>                                          
+                    @endif                   
+                                        
                     <table class="table table-striped">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">Room</th>
                             <th scope="col">Duration</th>
                             <th scope="col">Price</th>
-                            <th scope="col" colspan="2" class="text-center">Action</th>                            
+                            <th scope="col">Type</th>
+                            <th scope="col">Date Time</th>  
+                            <th scope="col">By</th>                     
                         </tr>
                         </thead>
                         <tbody>
-                        @unless (count($room_pricings) == 0)
+                        @unless (count($room_transactions) == 0)
                         @php
                             $counter = 1;                            
                         @endphp
-                            @foreach ($room_pricings as $room_pricing)
+                            @foreach ($room_transactions as $room_transaction)
                             <tr>
                                 <th scope="row">{{$counter++}}</th>
-                                <td>{{$room_pricing->duration}}</td>
-                                <td>₱ {{number_format($room_pricing->price,2)}}</td>
-                                <td class="text-center"><a href="/room_pricings/{{$room_pricing->id}}/edit"><button type="button" class="btn btn-outline-info btn-sm">Edit</button></a></td>
-                                <td class="text-center">
-                                    <form method="POST" action="/room_pricings/{{$room_pricing->id}}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-                                    </form>                                    
-                                </td>
+                                <td>{{$room->room_name}}|{{$room->room_number}}</td>
+                                <td>{{$room_transaction->duration}}</td>
+                                <td>{{number_format($room_transaction->price,2)}}</td>
+                                <td>{{strtoupper($room_transaction->transact_type)}}</td>
+                                <td>{{Carbon\Carbon::parse($room_transaction->date_time)->format('d/m/Y g:i a')}}</td>
+                                <td>{{$room_transaction->users->username}}</td>
                             </tr>                             
                             @endforeach     
                         @else
                             <tr>
-                                <td colspan="4">No Room Pricing found.</td>
+                                <td colspan="6">No Room Transactions found.</td>
                             </tr>  
                             <p></p>
                         @endunless                                                                  

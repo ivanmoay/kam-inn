@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\RoomTransaction;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -34,6 +35,10 @@ class User extends Authenticatable
     ];
 
     public function sales(){
-        return $this->hasMany(Sale::class, 'user');
+        return $this->hasMany(Sale::class, 'user_id');
+    }
+
+    public function room_transactions(){
+        return $this->hasMany(RoomTransaction::class, 'user_id');
     }
 }

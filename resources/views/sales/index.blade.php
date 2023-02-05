@@ -38,7 +38,7 @@
                             <tr>
                                 <th scope="row">{{$counter++}}</th>
                                 <td><a href="/sales/{{$sale->id}}/items">{{$sale->id}}</a></td>
-                                <td>{{Carbon\Carbon::parse($sale->date_time)->format('d/m/Y h:m A')}}</td>
+                                <td>{{Carbon\Carbon::parse($sale->date_time)->format('d/m/Y g:i a')}}</td>
                                 <td>₱ {{number_format($sale->total,2)}}</td>
                                 <td>{{@$sale->users->username}}</td>
 

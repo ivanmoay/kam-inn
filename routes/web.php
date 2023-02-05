@@ -70,6 +70,11 @@ Route::get('/cart/{cart}/remove', [ItemController::class, 'removeItemFromCart'])
 Route::post('/cart/checkout', [ItemController::class, 'checkout']);
 
 Route::get('/rooms',[RoomController::class, 'index']);
+Route::get('/rooms/{room}/transactions',[RoomController::class, 'transactions']);
+Route::get('/rooms/{room}/checkin', [RoomController::class, 'checkinShow']);
+Route::post('/checkin/{room}', [RoomController::class, 'checkin']);
+Route::get('/rooms/{room}/checkout', [RoomController::class, 'checkoutShow']);
+Route::post('/checkout/{room}', [RoomController::class, 'checkout']);
 
 Route::get('/room_pricings',[RoomPricingController::class, 'index']);
 

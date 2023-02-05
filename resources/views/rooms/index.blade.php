@@ -31,7 +31,7 @@
                             <th scope="col">Room Number</th>
                             <th scope="col">Available</th>
                             <th scope="col">Occupied</th>
-                            <th scope="col" colspan="2" class="text-center">Action</th>                            
+                            <th scope="col" colspan="3" class="text-center">Action</th>                            
                         </tr>
                         </thead>
                         <tbody>
@@ -42,11 +42,16 @@
                             @foreach ($rooms as $room)
                             <tr>
                                 <th scope="row">{{$counter++}}</th>
-                                <td>{{$room->room_name}}</td>
+                                <td><a href="/rooms/{{$room->id}}/transactions">{{$room->room_name}}</a></td>
                                 <td>{{$room->room_number}}</td>
                                 <td>{{$room->available == 1 ? 'Yes' : 'No'}}</td>
                                 <td>{{$room->occupied == 1 ? 'Yes' : 'No'}}</td>
-                                <td class="text-center"><a href="/rooms/{{$room->id}}/edit"><button type="button" class="btn btn-outline-info btn-sm">Edit</button></a></td>
+                                @if ($room->occupied == 1)
+                                    <td class="text-center"><a href="/rooms/{{$room->id}}/checkout"><button type="button" class="btn btn-outline-warning btn-sm">Checkout</button></a></td>
+                                @else
+                                    <td class="text-center"><a href="/rooms/{{$room->id}}/checkin"><button type="button" class="btn btn-outline-success btn-sm">Checkin</button></a></td>
+                                @endif       
+                                <td class="text-center"><a href="/rooms/{{$room->id}}/edit"><button type="button" class="btn btn-outline-info btn-sm">Edit</button></a></td>                                
                                 <td class="text-center">
                                     <form method="POST" action="/rooms/{{$room->id}}">
                                         @csrf
