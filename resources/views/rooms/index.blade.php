@@ -47,9 +47,17 @@
                                 <td>{{$room->available == 1 ? 'Yes' : 'No'}}</td>
                                 <td>{{$room->occupied == 1 ? 'Yes' : 'No'}}</td>
                                 @if ($room->occupied == 1)
-                                    <td class="text-center"><a href="/rooms/{{$room->id}}/checkout"><button type="button" class="btn btn-outline-warning btn-sm">Checkout</button></a></td>
+                                    <td class="text-center">
+                                        <a href="/rooms/{{$room->id}}/checkout"><button type="button" class="btn btn-outline-warning btn-sm">Checkout</button></a>
+                                        <a href="/rooms/{{$room->id}}/extend"><button type="button" class="btn btn-outline-secondary btn-sm">Extend</button></a>
+                                    </td>
                                 @else
-                                    <td class="text-center"><a href="/rooms/{{$room->id}}/checkin"><button type="button" class="btn btn-outline-success btn-sm">Checkin</button></a></td>
+                                    @if ($room->available == 1)
+                                        <td class="text-center"><a href="/rooms/{{$room->id}}/checkin"><button type="button" class="btn btn-outline-success btn-sm">Checkin</button></a></td>
+                                    @else  
+                                        <td class="text-center"></td>
+                                    @endif   
+                                                                   
                                 @endif       
                                 <td class="text-center"><a href="/rooms/{{$room->id}}/edit"><button type="button" class="btn btn-outline-info btn-sm">Edit</button></a></td>                                
                                 <td class="text-center">

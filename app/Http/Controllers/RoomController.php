@@ -26,6 +26,15 @@ class RoomController extends Controller
         ]);
     }
 
+    public function room_transactions(Request $request)
+    {
+        return view('rooms.room_transactions', [
+            'room_transactions' => RoomTransaction::whereBetween('date_time', [$request->dateFrom, $request->dateTo])->orderBy('date_time', 'DESC')->get(),
+            'dateFrom' => $request->dateFrom,
+            'dateTo' => $request->dateTo
+        ]);
+    }
+
     public function create()
     {
         return view('rooms.create');
@@ -64,6 +73,15 @@ class RoomController extends Controller
     public function checkoutShow(Room $room)
     {
         return view('rooms.room_checkout', [
+            'room' => $room,
+            'room_pricings' => RoomPricing::all(),
+            'last_transact' => RoomTransaction::where('room_id', '=', $room->id)->where('transact_type', '=', 'in')->latest()->first()
+        ]);
+    }
+
+    public function extendShow(Room $room)
+    {
+        return view('rooms.room_extend', [
             'room' => $room,
             'room_pricings' => RoomPricing::all(),
             'last_transact' => RoomTransaction::where('room_id', '=', $room->id)->where('transact_type', '=', 'in')->latest()->first()
@@ -118,6 +136,31 @@ class RoomController extends Controller
         }
 
         return redirect('/rooms')->with('message', 'Room checkout.'); 
+    }
+
+    public function extend(Request $request, Room $room)
+    {
+        date_default_timezone_set('Asia/Manila');
+        //update room occupied
+        // if(Room::where('id', $room->id)->update(['occupied' => 0]))
+        // {
+        //save room transaction
+        $split = explode("|", $request->duration);
+
+        RoomTransaction::create([
+            'room_id' => $room->id,
+            'duration' => $split[0],
+            'price' => $split[1],
+            'date_time' => now(),
+            'transact_type' => 'ext',
+            'user_id' => auth()->user()->id
+        ]);
+
+        //email
+        Mail::to(env('MAIL_TO_ADDRESS'))->send(new RoomMail('ext', $room->room_name, $room->room_number, $split[0], $split[1], now(), auth()->user()->username));
+        // }
+
+        return redirect('/rooms')->with('message', 'Room Stay Extended.'); 
     }
 
     public function edit(Room $room)

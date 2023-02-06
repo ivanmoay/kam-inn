@@ -19,6 +19,8 @@
                             
                         <x-input-text label="Item Price" main_class="row mb-3" name="item_price" value="{{$item->item_price}}"/> 
 
+                        <x-input-text label="Quantity" main_class="row mb-3" name="quantity" value="{{$item->quantity}}"/> 
+
                         <div class="form-check">                            
                             <input class="form-check-input" type="checkbox" id="gridCheck1" name="available" {{$item->available == 1 ? 'checked' : ''}}>       
                             <label class="form-check-label" for="gridCheck1">

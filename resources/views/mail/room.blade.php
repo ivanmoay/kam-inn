@@ -1,5 +1,7 @@
 @if ($type == 'in')
     Check-In
+@elseif($type == 'ext')
+    Extend
 @else
     Check-Out
 @endif

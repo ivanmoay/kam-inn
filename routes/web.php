@@ -5,6 +5,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SaleItemController;
 use App\Http\Controllers\RoomPricingController;
 
 /*
@@ -63,6 +64,9 @@ Route::post('/items/search', [ItemController::class, 'search']);
 Route::get('/sales',[SaleController::class, 'index']);
 Route::get('/sales/{sale}/items',[SaleController::class, 'show']);
 
+Route::get('/item_sales',[SaleItemController::class, 'index']);
+Route::post('/item_sales',[SaleItemController::class, 'filter']);
+
 Route::get('/items/{item}/add_to_cart', [ItemController::class, 'addToCart']);
 Route::get('/items/cart', [ItemController::class, 'cart']);
 Route::get('/cart/clear', [ItemController::class, 'clearCart']);
@@ -75,6 +79,11 @@ Route::get('/rooms/{room}/checkin', [RoomController::class, 'checkinShow']);
 Route::post('/checkin/{room}', [RoomController::class, 'checkin']);
 Route::get('/rooms/{room}/checkout', [RoomController::class, 'checkoutShow']);
 Route::post('/checkout/{room}', [RoomController::class, 'checkout']);
+Route::get('/rooms/{room}/extend', [RoomController::class, 'extendShow']);
+Route::post('/extend/{room}', [RoomController::class, 'extend']);
+
+Route::get('/rooms/transactions',[RoomController::class, 'room_transactions']);
+Route::post('/rooms/transactions',[RoomController::class, 'room_transactions']);
 
 Route::get('/room_pricings',[RoomPricingController::class, 'index']);
 

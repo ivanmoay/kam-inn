@@ -44,6 +44,7 @@
                             <th scope="col">Add to Cart</th>
                             <th scope="col">Item</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
                             <th scope="col">Available</th>
                             <th scope="col" colspan="2" class="text-center">Action</th>                            
                         </tr>
@@ -57,12 +58,13 @@
                             <tr>
                                 <th scope="row">{{$counter++}}</th>
                                 <td>
-                                    @if ($item->available == 1)
+                                    @if ($item->available == 1 && $item->quantity > 0)
                                         <a href="/items/{{$item->id}}/add_to_cart"><i class="bi bi-cart"></i><a href="#">
                                     @endif                                                                            
                                 </td>
                                 <td>{{$item->item}}</td>
                                 <td>₱ {{number_format($item->item_price, 2)}}</td>
+                                <td>{{$item->quantity}}</td>
                                 <td>{{$item->available == 1 ? 'Yes' : 'No'}}</td>
                                 <td class="text-center"><a href="/items/{{$item->id}}/edit"><button type="button" class="btn btn-outline-info btn-sm">Edit</button></a></td>
                                 <td class="text-center">
@@ -76,7 +78,7 @@
                             @endforeach     
                         @else
                             <tr>
-                                <td colspan="6">No item found.</td>
+                                <td colspan="7">No item found.</td>
                             </tr>  
                             <p></p>
                         @endunless                                                                  

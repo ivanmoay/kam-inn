@@ -18,6 +18,8 @@
                         
                         <x-input-text label="Item Price" main_class="row mb-3" name="item_price" value="{{old('item_price')}}"/>  
 
+                        <x-input-text label="Quantity" main_class="row mb-3" name="quantity" value="{{old('quantity')}}"/>  
+
                         <div class="form-check">                            
                             <input class="form-check-input" type="checkbox" id="gridCheck1" name="available" checked>       
                             <label class="form-check-label" for="gridCheck1">

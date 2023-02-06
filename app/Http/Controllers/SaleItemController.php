@@ -14,17 +14,18 @@ class SaleItemController extends Controller
      */
     public function index()
     {
-        //
+        return view('sales.item_sales', [
+            'item_sales' => SaleItem::orderBy('created_at', 'DESC')->paginate(64)
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function filter(Request $request)
     {
-        //
+        return view('sales.item_sales', [
+            'item_sales' => SaleItem::whereBetween('created_at', [$request->dateFrom, $request->dateTo])->orderBy('created_at', 'DESC')->get(),
+            'dateFrom' => $request->dateFrom,
+            'dateTo' => $request->dateTo
+        ]);
     }
 
     /**

@@ -128,9 +128,21 @@
         </a>
       </li> 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="\item_sales">
+          <i class="bi bi-grid"></i>
+          <span>Item Sales</span>
+        </a>
+      </li> 
+      <li class="nav-item">
         <a class="nav-link collapsed" href="\rooms">
           <i class="bi bi-grid"></i>
           <span>Rooms</span>
+        </a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/rooms/transactions">
+          <i class="bi bi-grid"></i>
+          <span>Room Transactions</span>
         </a>
       </li> 
       <li class="nav-item">

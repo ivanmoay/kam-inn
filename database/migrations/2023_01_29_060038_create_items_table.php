@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('item');
             $table->decimal('item_price', 9, 3);
+            $table->integer('quantity');
             $table->boolean('available');
             $table->timestamps();
         });

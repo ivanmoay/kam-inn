@@ -36,7 +36,7 @@
                                     <th scope="col">Actions</th>                   
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody>                                    
                                 @unless (count($cart) == 0)
                                 @php
                                     $counter = 0;                            
@@ -49,12 +49,17 @@
                                         <td><input type="number" class="form-control" id="price{{$counter}}" name="price{{$counter}}" value="{{$cart->price}}" readonly></td>
                                         <td><input type="number" class="form-control" id="total{{$counter}}" name="total{{$counter}}" value="{{$cart->qty * $cart->price}}" readonly></td>
                                         <td><a href="/cart/{{$cart->rowId}}/remove"><button type="button" class="btn btn-outline-danger btn-sm">Remove</button></a></td>
-                                    </tr> 
+                                    </tr>                                     
                                     @php
                                         $counter++;
                                     @endphp                      
-                                    @endforeach     
-                                    <input type="hidden" value="{{$counter}}" name="counter">  
+                                    @endforeach 
+                                    <tr>
+                                        <td colspan="4"></td>
+                                        <th scope="row">Total: <span id="total"> 0 </span></th>
+                                        <td></td>
+                                    </tr>     
+                                    <input type="hidden" id="counter" value="{{$counter}}" name="counter">  
                                 @else
                                     <tr>
                                         <td colspan="6">No items in cart found.</td>
@@ -74,12 +79,33 @@
             </div>
         </div>
         <script>
+            getOverallTotal();
+
             function getTotal(totalID, qtyID, priceID)
             {
                 var quantity = document.getElementById(qtyID).value;
-                var price = document.getElementById(priceID).value;
+                var price = document.getElementById(priceID).value;                
 
-                document.getElementById(totalID).value = quantity * price;
+                document.getElementById(totalID).value = quantity * price;     
+                
+                getOverallTotal();
+            }
+
+            function getOverallTotal()
+            {
+                var counter = document.getElementById("counter").value;
+                var total = 0;
+
+                for (let i = 0; i < counter; i++) {
+                    var name = "total" + i;
+                    //console.log(name);
+                    //console.log(document.getElementById(name).value);
+
+                    total += parseInt(document.getElementById(name).value);
+                }                
+
+                var span = document.getElementById("total");
+                span.textContent = total;
             }
         </script>
     </section>

@@ -59,7 +59,8 @@ class ItemController extends Controller
     {
         $formFields = $request->validate([
             'item' => 'required',            
-            'item_price' => 'required|numeric'
+            'item_price' => 'required|numeric',
+            'quantity' => 'required|numeric'
         ]); 
         
         $formFields['item'] = ucwords($formFields['item']);
@@ -122,14 +123,18 @@ class ItemController extends Controller
           )
         {
             for ($i=0; $i < $request->counter; $i++) { 
-                SaleItem::create([
-                    'sale_id' => $sale->id,
-                    'item_id' => $request->{"id".$i},
-                    'quantity' => $request->{"qty".$i},
-                    'price' => $request->{"price".$i},
-                    'total' => $request->{"total".$i}
-                ]);
-                //array_push($items, $request->{"item".$i});
+                if(
+                    SaleItem::create([
+                        'sale_id' => $sale->id,
+                        'item_id' => $request->{"id".$i},
+                        'quantity' => $request->{"qty".$i},
+                        'price' => $request->{"price".$i},
+                        'total' => $request->{"total".$i}
+                    ])
+                )
+                {
+                    Item::where('id', '=', $request->{"id".$i})->decrement('quantity', $request->{"qty".$i});
+                }
             }
         }
 
@@ -169,7 +174,8 @@ class ItemController extends Controller
     {
         $formFields = $request->validate([        
             'item' => 'required',            
-            'item_price' => 'required|numeric'
+            'item_price' => 'required|numeric',
+            'quantity' => 'required|numeric'
         ]);        
 
         $formFields['item'] = ucwords($formFields['item']);
