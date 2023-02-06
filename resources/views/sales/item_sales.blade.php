@@ -62,12 +62,12 @@
                                 <td>{{$item_sale->quantity}}</td>
                                 <td>₱ {{number_format($item_sale->price,2)}}</td>
                                 <td>₱ {{number_format($item_sale->total,2)}}</td>
-                                <td>{{$item_sale->sales->users->username}}</td>
+                                <td>{{@$item_sale->sales->users->username}}</td>
                             </tr>                             
                             @endforeach     
                         @else
                             <tr>
-                                <td colspan="6">No Item Sales found.</td>
+                                <td colspan="8">No Item Sales found.</td>
                             </tr>  
                             <p></p>
                         @endunless                                                                  
