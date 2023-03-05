@@ -28,6 +28,15 @@
                             <label for="inputEmail5" class="form-label">To</label>
                             <input type="date" class="form-control" name="dateTo" value="{{@$dateTo}}" required>
                         </div>
+                        <div class="col-md-2">
+                            <label for="inputEmail5" class="form-label">Sold By</label>
+                            <select class="form-select" aria-label="Default select example" name="user_id">
+                                <option value="0" selected>All</option>
+                                @foreach ($users as $user)
+                                    <option value="{{$user->id}}" {{@$user_id==$user->id ? 'selected' : ''}}>{{$user->username}}</option>
+                                @endforeach                                
+                            </select>
+                        </div>
                         <div class="col-md-3">
                             <label for="inputPassword5" class="form-label">&nbsp;</label><br/>
                             {{-- <input type="password" class="form-control" id="inputPassword5"> --}}
@@ -54,16 +63,31 @@
                             $counter = 1;                            
                         @endphp
                             @foreach ($item_sales as $item_sale)
-                            <tr>
-                                <th scope="row">{{$counter++}}</th>
-                                <td>{{$item_sale->sale_id}}</td>
-                                <td>{{Carbon\Carbon::parse($item_sale->created_at)->format('d/m/Y g:i a')}}</td>
-                                <td>{{$item_sale->items->item}}</td>
-                                <td>{{$item_sale->quantity}}</td>
-                                <td>₱ {{number_format($item_sale->price,2)}}</td>
-                                <td>₱ {{number_format($item_sale->total,2)}}</td>
-                                <td>{{@$item_sale->sales->users->username}}</td>
-                            </tr>                             
+                                @if (@$user_id > 0)
+                                    @if ($user_id == @$item_sale->sales->user_id)
+                                        <tr>
+                                            <th scope="row">{{$counter++}}</th>
+                                            <td>{{$item_sale->sale_id}}</td>
+                                            <td>{{Carbon\Carbon::parse($item_sale->created_at)->format('d/m/Y g:i a')}}</td>
+                                            <td>{{$item_sale->items->item}}</td>
+                                            <td>{{$item_sale->quantity}}</td>
+                                            <td>₱ {{number_format($item_sale->price,2)}}</td>
+                                            <td>₱ {{number_format($item_sale->total,2)}}</td>
+                                            <td>{{@$item_sale->sales->users->username}}</td>
+                                        </tr> 
+                                    @endif                                    
+                                @else
+                                    <tr>
+                                        <th scope="row">{{$counter++}}</th>
+                                        <td>{{$item_sale->sale_id}}</td>
+                                        <td>{{Carbon\Carbon::parse($item_sale->created_at)->format('d/m/Y g:i a')}}</td>
+                                        <td>{{$item_sale->items->item}}</td>
+                                        <td>{{$item_sale->quantity}}</td>
+                                        <td>₱ {{number_format($item_sale->price,2)}}</td>
+                                        <td>₱ {{number_format($item_sale->total,2)}}</td>
+                                        <td>{{@$item_sale->sales->users->username}}</td>
+                                    </tr> 
+                                @endif                                                        
                             @endforeach     
                         @else
                             <tr>

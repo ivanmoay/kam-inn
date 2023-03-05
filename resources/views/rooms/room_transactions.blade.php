@@ -28,6 +28,15 @@
                             <label for="inputEmail5" class="form-label">To</label>
                             <input type="date" class="form-control" name="dateTo" value="{{@$dateTo}}" required>
                         </div>
+                        <div class="col-md-2">
+                            <label for="inputEmail5" class="form-label">By</label>
+                            <select class="form-select" aria-label="Default select example" name="user_id">
+                                <option value="0" selected>All</option>
+                                @foreach ($users as $user)
+                                    <option value="{{$user->id}}" {{@$user_id==$user->id ? 'selected' : ''}}>{{$user->username}}</option>
+                                @endforeach                                
+                            </select>
+                        </div>
                         <div class="col-md-3">
                             <label for="inputPassword5" class="form-label">&nbsp;</label><br/>
                             {{-- <input type="password" class="form-control" id="inputPassword5"> --}}
@@ -53,15 +62,29 @@
                             $counter = 1;                            
                         @endphp
                             @foreach ($room_transactions as $room_transaction)
-                            <tr>
-                                <th scope="row">{{$counter++}}</th>
-                                <td>{{$room_transaction->rooms->room_name}}|{{$room_transaction->rooms->room_number}}</td>
-                                <td>{{$room_transaction->duration}}</td>
-                                <td>{{number_format($room_transaction->price,2)}}</td>
-                                <td>{{strtoupper($room_transaction->transact_type)}}</td>
-                                <td>{{Carbon\Carbon::parse($room_transaction->date_time)->format('d/m/Y g:i a')}}</td>
-                                <td>{{@$room_transaction->users->username}}</td>
-                            </tr>                             
+                                @if (@$user_id > 0)
+                                    @if ($user_id == @$room_transaction->user_id)
+                                        <tr>
+                                            <th scope="row">{{$counter++}}</th>
+                                            <td>{{$room_transaction->rooms->room_name}}|{{$room_transaction->rooms->room_number}}</td>
+                                            <td>{{$room_transaction->duration}}</td>
+                                            <td>{{number_format($room_transaction->price,2)}}</td>
+                                            <td>{{strtoupper($room_transaction->transact_type)}}</td>
+                                            <td>{{Carbon\Carbon::parse($room_transaction->date_time)->format('d/m/Y g:i a')}}</td>
+                                            <td>{{@$room_transaction->users->username}}</td>
+                                        </tr> 
+                                    @endif                                
+                                @else
+                                    <tr>
+                                        <th scope="row">{{$counter++}}</th>
+                                        <td>{{$room_transaction->rooms->room_name}}|{{$room_transaction->rooms->room_number}}</td>
+                                        <td>{{$room_transaction->duration}}</td>
+                                        <td>{{number_format($room_transaction->price,2)}}</td>
+                                        <td>{{strtoupper($room_transaction->transact_type)}}</td>
+                                        <td>{{Carbon\Carbon::parse($room_transaction->date_time)->format('d/m/Y g:i a')}}</td>
+                                        <td>{{@$room_transaction->users->username}}</td>
+                                    </tr> 
+                                @endif                                                        
                             @endforeach     
                         @else
                             <tr>

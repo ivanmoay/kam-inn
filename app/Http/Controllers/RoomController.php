@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Models\User;
 use App\Mail\RoomMail;
 use App\Models\RoomPricing;
 use Illuminate\Http\Request;
@@ -31,7 +32,9 @@ class RoomController extends Controller
         return view('rooms.room_transactions', [
             'room_transactions' => RoomTransaction::whereBetween('date_time', [$request->dateFrom, $request->dateTo])->orderBy('date_time', 'DESC')->get(),
             'dateFrom' => $request->dateFrom,
-            'dateTo' => $request->dateTo
+            'dateTo' => $request->dateTo,
+            'user_id' => $request->user_id,
+            'users' => User::all()
         ]);
     }
 
