@@ -59,7 +59,8 @@
                         <tbody>
                         @unless (count($room_transactions) == 0)
                         @php
-                            $counter = 1;                            
+                            $counter = 1;     
+                            $total = 0;                        
                         @endphp
                             @foreach ($room_transactions as $room_transaction)
                                 @if (@$user_id > 0)
@@ -73,6 +74,12 @@
                                             <td>{{Carbon\Carbon::parse($room_transaction->date_time)->format('d/m/Y g:i a')}}</td>
                                             <td>{{@$room_transaction->users->username}}</td>
                                         </tr> 
+                                        @php
+                                            if($room_transaction->transact_type != 'in')
+                                            {
+                                                $total += $room_transaction->price;       
+                                            }                                            
+                                        @endphp
                                     @endif                                
                                 @else
                                     <tr>
@@ -84,8 +91,19 @@
                                         <td>{{Carbon\Carbon::parse($room_transaction->date_time)->format('d/m/Y g:i a')}}</td>
                                         <td>{{@$room_transaction->users->username}}</td>
                                     </tr> 
+                                    @php
+                                        if($room_transaction->transact_type != 'in')
+                                        {
+                                            $total += $room_transaction->price;       
+                                        }     
+                                    @endphp
                                 @endif                                                        
                             @endforeach     
+                            <tr>
+                                <td colspan="2"></td>
+                                <td colspan="1" class="text-end fw-bold">Total:</td>
+                                <td colspan="4" class="text-start fw-bold">₱ {{number_format($total,2)}}</td>
+                            </tr> 
                         @else
                             <tr>
                                 <td colspan="7">No Room Transactions found.</td>

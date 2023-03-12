@@ -60,7 +60,8 @@
                         <tbody>
                         @unless (count($item_sales) == 0)
                         @php
-                            $counter = 1;                            
+                            $counter = 1;          
+                            $total = 0;                    
                         @endphp
                             @foreach ($item_sales as $item_sale)
                                 @if (@$user_id > 0)
@@ -75,6 +76,9 @@
                                             <td>₱ {{number_format($item_sale->total,2)}}</td>
                                             <td>{{@$item_sale->sales->users->username}}</td>
                                         </tr> 
+                                        @php
+                                            $total += $item_sale->total;       
+                                        @endphp
                                     @endif                                    
                                 @else
                                     <tr>
@@ -86,9 +90,17 @@
                                         <td>₱ {{number_format($item_sale->price,2)}}</td>
                                         <td>₱ {{number_format($item_sale->total,2)}}</td>
                                         <td>{{@$item_sale->sales->users->username}}</td>
-                                    </tr> 
+                                    </tr>
+                                    @php
+                                        $total += $item_sale->total;       
+                                    @endphp 
                                 @endif                                                        
-                            @endforeach     
+                            @endforeach 
+                            <tr>
+                                <td colspan="5"></td>
+                                <td colspan="1" class="text-end fw-bold">Total:</td>
+                                <td colspan="2" class="text-start fw-bold">₱ {{number_format($total,2)}}</td>
+                            </tr>    
                         @else
                             <tr>
                                 <td colspan="8">No Item Sales found.</td>
