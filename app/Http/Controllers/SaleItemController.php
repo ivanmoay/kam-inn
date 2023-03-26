@@ -24,29 +24,21 @@ class SaleItemController extends Controller
 
     public function filter(Request $request)
     {
+        //dd($request->dateFrom.' '.$request->timeFrom);
+        $from = $request->dateFrom.' '.$request->timeFrom;
+        $to = $request->dateTo.' '.$request->timeTo;
         if($request->user_id == 0){
-            $item_sales = SaleItem::whereBetween('created_at', [$request->dateFrom, $request->dateTo])->orderBy('created_at', 'DESC')->get();
+            $item_sales = SaleItem::whereBetween('created_at', [$from, $to])->orderBy('created_at', 'DESC')->get();
         }else{
-            // $user_id = $request->user_id;
-
-            // DB::enableQueryLog();
-            // $item_sales = 
-            //     SaleItem::
-            //         whereBetween('created_at', [$request->dateFrom, $request->dateTo])
-            //         ->whereHas('sales', function($q) use ($user_id){
-            //             $q->where('user_id', '==', $user_id);
-            //         })
-            //         ->orderBy('created_at', 'DESC')
-            //         ->get();
-            // $quries = DB::getQueryLog();
-            // dd($quries);
-            $item_sales = SaleItem::whereBetween('created_at', [$request->dateFrom, $request->dateTo])->orderBy('created_at', 'DESC')->get();
+            $item_sales = SaleItem::whereBetween('created_at', [$from, $to])->orderBy('created_at', 'DESC')->get();
         }        
 
         return view('sales.item_sales', [
             'item_sales' => $item_sales,
             'dateFrom' => $request->dateFrom,
             'dateTo' => $request->dateTo,
+            'timeFrom' => $request->timeFrom,
+            'timeTo' => $request->timeTo,
             'user_id' => $request->user_id,
             'users' => User::all()
         ]);

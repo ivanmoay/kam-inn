@@ -56,6 +56,9 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::get('/room_pricings/{room_pricing}/edit', [RoomPricingController::class, 'edit']);
     Route::put('/room_pricings/{room_pricing}', [RoomPricingController::class, 'update']);
     Route::delete('/room_pricings/{room_pricing}', [RoomPricingController::class, 'destroy']);
+
+    Route::get('/summary', [RoomController::class, 'summaryView']);
+    Route::post('/summary', [RoomController::class, 'summary']);
 });
 
 Route::get('/items',[ItemController::class, 'index']);

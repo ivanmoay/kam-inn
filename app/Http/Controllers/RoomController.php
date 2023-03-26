@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Room;
 use App\Models\User;
 use App\Mail\RoomMail;
+use App\Models\SaleItem;
 use App\Models\RoomPricing;
 use Illuminate\Http\Request;
 use App\Models\RoomTransaction;
@@ -29,12 +30,42 @@ class RoomController extends Controller
 
     public function room_transactions(Request $request)
     {
+        $from = $request->dateFrom.' '.$request->timeFrom;
+        $to = $request->dateTo.' '.$request->timeTo;
+
         return view('rooms.room_transactions', [
-            'room_transactions' => RoomTransaction::whereBetween('date_time', [$request->dateFrom, $request->dateTo])->orderBy('date_time', 'DESC')->get(),
+            'room_transactions' => RoomTransaction::whereBetween('date_time', [$from, $to])->orderBy('date_time', 'DESC')->get(),
             'dateFrom' => $request->dateFrom,
             'dateTo' => $request->dateTo,
+            'timeFrom' => $request->timeFrom,
+            'timeTo' => $request->timeTo,
             'user_id' => $request->user_id,
             'users' => User::all()
+        ]);
+    }
+
+    public function summaryView(){
+        return view('summary', [
+            'users' => User::all()
+        ]);
+    }
+
+    public function summary(Request $request){
+        $from = $request->dateFrom.' '.$request->timeFrom;
+        $to = $request->dateTo.' '.$request->timeTo;
+
+        $by = User::where('id', $request->user_id)->first();        
+
+        return view('summary', [
+            'item_sales' => SaleItem::whereBetween('created_at', [$from, $to])->orderBy('created_at', 'DESC')->get(),
+            'room_transactions' => RoomTransaction::whereBetween('date_time', [$from, $to])->orderBy('date_time', 'DESC')->get(),
+            'dateFrom' => $request->dateFrom,
+            'dateTo' => $request->dateTo,
+            'timeFrom' => $request->timeFrom,
+            'timeTo' => $request->timeTo,
+            'user_id' => $request->user_id,
+            'users' => User::all(),
+            'by' => $by,
         ]);
     }
 

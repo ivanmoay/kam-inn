@@ -25,8 +25,16 @@
                             <input type="date" class="form-control" name="dateFrom" value="{{@$dateFrom}}" required>
                         </div>
                         <div class="col-md-2">
+                            <label for="inputEmail5" class="form-label">Time</label>
+                            <input type="time" class="form-control" name="timeFrom" value="{{@$timeFrom}}" required>
+                        </div>
+                        <div class="col-md-2">
                             <label for="inputEmail5" class="form-label">To</label>
                             <input type="date" class="form-control" name="dateTo" value="{{@$dateTo}}" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="inputEmail5" class="form-label">Time</label>
+                            <input type="time" class="form-control" name="timeTo" value="{{@$timeTo}}" required>
                         </div>
                         <div class="col-md-2">
                             <label for="inputEmail5" class="form-label">By</label>
@@ -37,7 +45,7 @@
                                 @endforeach                                
                             </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="inputPassword5" class="form-label">&nbsp;</label><br/>
                             {{-- <input type="password" class="form-control" id="inputPassword5"> --}}
                             <button type="submit" class="btn btn-primary">Filter</button>
@@ -75,7 +83,7 @@
                                             <td>{{@$room_transaction->users->username}}</td>
                                         </tr> 
                                         @php
-                                            if($room_transaction->transact_type != 'in')
+                                            if($room_transaction->transact_type != 'out')
                                             {
                                                 $total += $room_transaction->price;       
                                             }                                            
@@ -86,13 +94,13 @@
                                         <th scope="row">{{$counter++}}</th>
                                         <td>{{$room_transaction->rooms->room_name}}|{{$room_transaction->rooms->room_number}}</td>
                                         <td>{{$room_transaction->duration}}</td>
-                                        <td>{{number_format($room_transaction->price,2)}}</td>
+                                        <td>{{$room_transaction->transact_type != 'out' ? number_format($room_transaction->price,2) : '--' }}</td>
                                         <td>{{strtoupper($room_transaction->transact_type)}}</td>
                                         <td>{{Carbon\Carbon::parse($room_transaction->date_time)->format('d/m/Y g:i a')}}</td>
                                         <td>{{@$room_transaction->users->username}}</td>
                                     </tr> 
                                     @php
-                                        if($room_transaction->transact_type != 'in')
+                                        if($room_transaction->transact_type != 'out')
                                         {
                                             $total += $room_transaction->price;       
                                         }     

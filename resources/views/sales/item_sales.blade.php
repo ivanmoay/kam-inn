@@ -25,8 +25,16 @@
                             <input type="date" class="form-control" name="dateFrom" value="{{@$dateFrom}}" required>
                         </div>
                         <div class="col-md-2">
+                            <label for="inputEmail5" class="form-label">Time</label>
+                            <input type="time" class="form-control" name="timeFrom" value="{{@$timeFrom}}" required>
+                        </div>
+                        <div class="col-md-2">
                             <label for="inputEmail5" class="form-label">To</label>
                             <input type="date" class="form-control" name="dateTo" value="{{@$dateTo}}" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="inputEmail5" class="form-label">Time</label>
+                            <input type="time" class="form-control" name="timeTo" value="{{@$timeTo}}" required>
                         </div>
                         <div class="col-md-2">
                             <label for="inputEmail5" class="form-label">Sold By</label>
@@ -37,7 +45,7 @@
                                 @endforeach                                
                             </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="inputPassword5" class="form-label">&nbsp;</label><br/>
                             {{-- <input type="password" class="form-control" id="inputPassword5"> --}}
                             <button type="submit" class="btn btn-primary">Filter</button>

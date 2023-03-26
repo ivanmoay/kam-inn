@@ -152,6 +152,12 @@
         </a>
       </li> 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="\summary">
+          <i class="bi bi-grid"></i>
+          <span>Transaction Summary</span>
+        </a>
+      </li> 
+      <li class="nav-item">
         <a class="nav-link collapsed" href="\logout">
           <i class="bi bi-grid"></i>
           <span>Logout</span>
