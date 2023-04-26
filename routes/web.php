@@ -45,11 +45,14 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::put('/items/{item}', [ItemController::class, 'update']);
     Route::delete('/items/{item}', [ItemController::class, 'destroy']);
 
+    Route::delete('/item_sales/{saleItem}', [SaleItemController::class, 'destroy']);
+
     Route::get('/rooms/create', [RoomController::class, 'create']);
     Route::post('/rooms', [RoomController::class, 'store']);
     Route::get('/rooms/{room}/edit', [RoomController::class, 'edit']);
     Route::put('/rooms/{room}', [RoomController::class, 'update']);
     Route::delete('/rooms/{room}', [RoomController::class, 'destroy']);
+    Route::delete('/rooms/transactions/void/{room_transaction}', [RoomController::class, 'void']);
 
     Route::get('/room_pricings/create', [RoomPricingController::class, 'create']);
     Route::post('/room_pricings', [RoomPricingController::class, 'store']);

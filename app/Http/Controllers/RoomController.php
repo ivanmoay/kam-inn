@@ -229,4 +229,17 @@ class RoomController extends Controller
         $room->delete();
         return redirect('/rooms')->with('message', 'Room deleted successfully');
     }
+
+    public function void(RoomTransaction $room_transaction){
+        $room_id = $room_transaction->room_id;
+        $transact_type = $room_transaction->transact_type;
+        //dd($room_transaction);
+        $room_transaction->delete();
+        if($transact_type == 'in'){
+            Room::where('id', $room_id)->update(['occupied' => 0]);
+        }else{
+            Room::where('id', $room_id)->update(['occupied' => 1]);
+        }
+        return redirect('/rooms/'.$room_id.'/transactions')->with('message', 'Room transaction voided.');
+    }
 }

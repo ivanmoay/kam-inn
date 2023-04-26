@@ -27,7 +27,8 @@
                             <th scope="col">Price</th>
                             <th scope="col">Type</th>
                             <th scope="col">Date Time</th>  
-                            <th scope="col">By</th>                     
+                            <th scope="col">By</th>    
+                            <th scope="col" class="text-center">Void</th>   
                         </tr>
                         </thead>
                         <tbody>
@@ -43,7 +44,14 @@
                                 <td>{{number_format($room_transaction->price,2)}}</td>
                                 <td>{{strtoupper($room_transaction->transact_type)}}</td>
                                 <td>{{Carbon\Carbon::parse($room_transaction->date_time)->format('d/m/Y g:i a')}}</td>
-                                <td>{{$room_transaction->users->username}}</td>
+                                <td>{{$room_transaction->users->username ?? ''}}</td>
+                                <td class="text-center">
+                                    <form method="POST" action="/rooms/transactions/void/{{$room_transaction->id}}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-outline-danger btn-sm" {{$counter-1 > 1 ? 'disabled' : ''}}>Void</button>
+                                    </form>                                    
+                                </td>
                             </tr>                             
                             @endforeach     
                         @else

@@ -62,7 +62,8 @@
                             <th scope="col">Quantity</th>
                             <th scope="col">Price</th>
                             <th scope="col">Total</th>   
-                            <th scope="col">Sold by</th>                     
+                            <th scope="col">Sold by</th>     
+                            <th scope="col" class="text-center">Action</th>                         
                         </tr>
                         </thead>
                         <tbody>
@@ -83,6 +84,13 @@
                                             <td>₱ {{number_format($item_sale->price,2)}}</td>
                                             <td>₱ {{number_format($item_sale->total,2)}}</td>
                                             <td>{{@$item_sale->sales->users->username}}</td>
+                                            <td class="text-center">
+                                                <form method="POST" action="/item_sales/{{$item_sale->id}}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                                                </form>                                    
+                                            </td>
                                         </tr> 
                                         @php
                                             $total += $item_sale->total;       
@@ -98,6 +106,13 @@
                                         <td>₱ {{number_format($item_sale->price,2)}}</td>
                                         <td>₱ {{number_format($item_sale->total,2)}}</td>
                                         <td>{{@$item_sale->sales->users->username}}</td>
+                                        <td class="text-center">
+                                            <form method="POST" action="/item_sales/{{$item_sale->id}}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                                            </form>                                    
+                                        </td>
                                     </tr>
                                     @php
                                         $total += $item_sale->total;       

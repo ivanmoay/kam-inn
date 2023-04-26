@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sale;
 use App\Models\User;
 use App\Models\SaleItem;
 use Illuminate\Http\Request;
@@ -97,6 +98,12 @@ class SaleItemController extends Controller
      */
     public function destroy(SaleItem $saleItem)
     {
-        //
+        Sale::where('id', $saleItem->sale_id)->decrement('total', $saleItem->total);
+        $sale = Sale::where('id', $saleItem->sale_id)->get()->first();  
+        $saleItem->delete();
+        if($sale->total <= 0){
+            $sale->delete();
+        }
+        return redirect('/item_sales')->with('message', 'Item Sale deleted successfully');
     }
 }

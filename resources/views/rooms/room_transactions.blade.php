@@ -80,7 +80,7 @@
                                             <td>{{number_format($room_transaction->price,2)}}</td>
                                             <td>{{strtoupper($room_transaction->transact_type)}}</td>
                                             <td>{{Carbon\Carbon::parse($room_transaction->date_time)->format('d/m/Y g:i a')}}</td>
-                                            <td>{{@$room_transaction->users->username}}</td>
+                                            <td>{{$room_transaction->users->username ?? ''}}</td>
                                         </tr> 
                                         @php
                                             if($room_transaction->transact_type != 'out')
@@ -92,12 +92,12 @@
                                 @else
                                     <tr>
                                         <th scope="row">{{$counter++}}</th>
-                                        <td>{{$room_transaction->rooms->room_name}}|{{$room_transaction->rooms->room_number}}</td>
+                                        <td>{{$room_transaction->rooms->room_name ?? ''}}|{{$room_transaction->rooms->room_number ?? ''}}</td>
                                         <td>{{$room_transaction->duration}}</td>
                                         <td>{{$room_transaction->transact_type != 'out' ? number_format($room_transaction->price,2) : '--' }}</td>
                                         <td>{{strtoupper($room_transaction->transact_type)}}</td>
                                         <td>{{Carbon\Carbon::parse($room_transaction->date_time)->format('d/m/Y g:i a')}}</td>
-                                        <td>{{@$room_transaction->users->username}}</td>
+                                        <td>{{$room_transaction->users->username ?? ''}}</td>
                                     </tr> 
                                     @php
                                         if($room_transaction->transact_type != 'out')
