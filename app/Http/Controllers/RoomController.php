@@ -24,7 +24,7 @@ class RoomController extends Controller
     {
         return view('rooms.transactions', [
             'room' => $room,
-            'room_transactions' => RoomTransaction::where('room_id', $room->id)->orderBy('date_time', 'DESC')->get()
+            'room_transactions' => RoomTransaction::where('room_id', $room->id)->orderBy('date_time', 'DESC')->paginate(64)
         ]);
     }
 
